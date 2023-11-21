@@ -1,5 +1,5 @@
 {
-  "name": "md-links",
+  "name": "c",
   "version": "0.1.0",
   "engines": {
     "node": ">=16.x"
@@ -8,5 +8,27 @@
     "createdAt": "2023-09-22T12:23:39.903Z",
     "version": "7.1.0",
     "commit": "d257c41694344460623eb1f1bb2a690bdfe33f83"
+  },
+  "description": "## Índice",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irmaginary/DEV011-md-links.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/irmaginary/DEV011-md-links/issues"
+  },
+  "homepage": "https://github.com/irmaginary/DEV011-md-links#readme",
+  "dependencies": {
+    "jest": "^29.7.0"
   }
 }
