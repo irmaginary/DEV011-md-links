@@ -1,7 +1,7 @@
 const { mdLinks } = require("../index.js");
 
 describe("mdLinks", () => {
-  it("should...", () => {
+  it("Debería ser una función", () => {
     console.log("FIX ME!");
   });
   // it('should return a Promise', () => {
@@ -10,7 +10,7 @@ describe("mdLinks", () => {
 });
 
 describe("mdLinks", () => {
-  it("debe rechazar cuando la ruta no existe", () => {
+  it("Debe rechazar cuando la ruta no existe", () => {
     return mdLinks("rutaFalsa/archivoFalso.md").catch((error) => {
       expect(error).toBe("La ruta no existe");
     });

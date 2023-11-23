@@ -7,17 +7,34 @@ const mdLinks = (inputPath, options) => {
     if (fs.existsSync(inputPath)) {
       // Identificar si la ruta es absoluta
       const esAbsoluta = path.isAbsolute(inputPath);
-
+      // Si la ruta no es absoluta, convertirla
       if (!esAbsoluta) {
-        // Si no es absoluta: convertir a absoluta
         inputPath = path.resolve(inputPath);
-        resolve("Ruta convertida");
+        console.log("Ruta convertida");
       } else {
         // Si es absoluta
-        resolve("Es absoluta");
+        console.log("Es absoluta");
       }
 
-      // Aquí puedes agregar la lógica para verificar si es un archivo o directorio
+      // Verificar si es un archivo o directorio comprobando extensión de md
+      const mdExtensiones = [
+        ".md",
+        ".mkd",
+        ".mdwn",
+        ".mdown",
+        ".mdtxt",
+        ".mdtext",
+        ".markdown",
+        ".text",
+      ];
+      const verifExtension = path.extname(inputPath).toLocaleLowerCase();
+      if (mdExtensiones.includes(verifExtension)) {
+        console.log("Es un archivo Markdown.");
+      } else {
+        console.log("No es un archivo Markdown.");
+      }
+
+      //resolve();
     } else {
       // Si no existe la ruta: reject
       reject("La ruta no existe");
@@ -28,4 +45,3 @@ const mdLinks = (inputPath, options) => {
 module.exports = {
   mdLinks,
 };
-
