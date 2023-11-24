@@ -34,7 +34,12 @@ const mdLinks = (inputPath, options) => {
         console.log("Es un archivo Markdown.");
 
         // Leer y extraer enlaces utilizando remarkable
-        const contenidoMarkdown = fs.readFileSync(inputPath, "utf-8");
+        fs.readFile(inputPath, "utf-8", (err, contenidoMarkdown) => {
+          if (err) {
+            console.error(`Error al leer el archivo: ${err.message}`);
+            reject(err);
+            return;
+          }
         const remarkable = new Remarkable();
         const tokens = remarkable.parse(contenidoMarkdown, {});
 
@@ -54,6 +59,8 @@ const mdLinks = (inputPath, options) => {
         const urlsFiltradas = urls.filter((url) => !url.startsWith("#"));
         console.log("URLs de enlaces encontrados:");
         console.log(urlsFiltradas);
+        resolve(urlsFiltradas);
+      });
 
         // Usar axios para realizar solicitudes HTTP con las URLs extraídas
         // const solicitudesHTTP = urlsFiltradas.map((url) =>
