@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const axios = require("axios");
-const { Remarkable } = require("remarkable");
+// const axios = require("axios");
+// const { Remarkable } = require("remarkable");
 
 const mdLinks = (inputPath, options) => {
   return new Promise((resolve, reject) => {
@@ -38,28 +38,39 @@ const mdLinks = (inputPath, options) => {
           if (err) {
             console.error(`Error al leer el archivo: ${err.message}`);
             reject(err);
-            return;
-          }
-        const remarkable = new Remarkable();
-        const tokens = remarkable.parse(contenidoMarkdown, {});
-
-        // Filtrar los tokens para obtener solo los enlaces
-        const urls = tokens
-          .filter((token) => token.type === "inline")
-          .map((token) => {
-            // Extraer URLs del contenido del token
-            const urlsInline = token.content.match(/\]\(([^)]+)\)/g);
-            if (urlsInline) {
-              return urlsInline.map((url) => url.substring(2, url.length - 1));
+          }else{
+            const regex =  /\[([^\]]+)\]\(([^)]+)\)/g;
+            const links = [];
+            let match;
+            while((match = regex.exec(contenidoMarkdown)) !== null) {
+              links.push({
+                href: match[2],
+                text: match[1],
+                file: inputPath,
+              });
             }
-            return [];
-          })
-          .flat();
-        // Filtrar las URLs para excluir las que tienen #
-        const urlsFiltradas = urls.filter((url) => !url.startsWith("#"));
-        console.log("URLs de enlaces encontrados:");
-        console.log(urlsFiltradas);
-        resolve(urlsFiltradas);
+            resolve(links);
+          }
+        // const remarkable = new Remarkable();
+        // const tokens = remarkable.parse(contenidoMarkdown, {});
+
+        // // Filtrar los tokens para obtener solo los enlaces
+        // const urls = tokens
+        //   .filter((token) => token.type === "inline")
+        //   .map((token) => {
+        //     // Extraer URLs del contenido del token
+        //     const urlsInline = token.content.match(/\]\(([^)]+)\)/g);
+        //     if (urlsInline) {
+        //       return urlsInline.map((url) => url.substring(2, url.length - 1));
+        //     }
+        //     return [];
+        //   })
+        //   .flat();
+        // // Filtrar las URLs para excluir las que tienen #
+        // const urlsFiltradas = urls.filter((url) => !url.startsWith("#"));
+        // console.log("URLs de enlaces encontrados:");
+        // console.log(urlsFiltradas);
+        // resolve(urlsFiltradas);
       });
 
         // Usar axios para realizar solicitudes HTTP con las URLs extraídas
