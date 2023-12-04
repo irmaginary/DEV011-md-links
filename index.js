@@ -1,4 +1,4 @@
-const { verificarExistencia, convertirRutaAbsoluta, verificarExtensionMarkdown, leerContenidoMarkdown } = require("./functions.js");
+const { verificarExistencia, convertirRutaAbsoluta, verificarExtensionMarkdown, leerContenidoMarkdown, validateLinks } = require("./functions.js");
 
 const mdLinks = (inputPath, validate) => {
   return new Promise((resolve, reject) => {
@@ -30,8 +30,12 @@ const mdLinks = (inputPath, validate) => {
                 text: match[1], //extrae título
                 file: inputPath, //extrae ruta
               });
+              if(validate){
+                (validateLinks(links).then((res) => resolve(res)));
+              }else{
+                resolve(links);
+              }
             }
-            resolve(links);
           })
           .catch(err => reject(err));
       } else {

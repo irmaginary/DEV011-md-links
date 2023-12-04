@@ -1,6 +1,18 @@
 const { mdLinks } = require("./index.js");
-mdLinks("README copy.md")
-  .then((res) => {console.log(res)})
-  .catch((error) => {
-    console.log(error);
-  });
+mdLinks("README copy.md", true)
+.then((res) => {
+  console.log(res);
+})
+.catch((err) => {
+  console.log(err);
+})
+  // .then((res) => {console.log(res)})
+  // .catch((error) => {
+  //   console.log(error);
+  // });
+  // .then(links => {
+  //   console.log(links);
+  // })
+  // .catch(error => {
+  //   console.error(error);
+  // });

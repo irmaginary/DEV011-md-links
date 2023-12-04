@@ -9,6 +9,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 
 const verificarExistencia = (ruta) => {
   return fs.existsSync(ruta);
@@ -46,10 +47,30 @@ const leerContenidoMarkdown = (ruta) => {
   });
 };
 
+
+const validateLinks = (links) => {
+  const verifArray = links.map((i) => {
+    const newItem = {...i};
+    return axios.get(newItem.href)
+    .then((res) => {
+      newItem.status = res.status;
+      newItem.statusText = res.statusText;
+      return newItem;
+    })
+    .catch((error) => {
+      newItem.status = !error.response ? 404 : error.response.status;
+      newItem.statusText = "error";
+      return newItem;
+      });
+  });
+  return Promise.all(verifArray);
+}
+
 module.exports = {
   verificarExistencia,
   convertirRutaAbsoluta,
   verificarExtensionMarkdown,
   leerContenidoMarkdown,
+  validateLinks,
 };
 
