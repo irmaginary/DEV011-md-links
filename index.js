@@ -1,4 +1,4 @@
-const { verificarExistencia, convertirRutaAbsoluta, verificarExtensionMarkdown, leerContenidoMarkdown, validateLinks } = require("./functions.js");
+const { verificarExistencia, convertirRutaAbsoluta, verificarExtensionMarkdown, leerContenidoMarkdown, validateLinks, crearObj } = require("./functions.js");
 
 const mdLinks = (inputPath, validate) => {
   return new Promise((resolve, reject) => {
@@ -21,22 +21,13 @@ const mdLinks = (inputPath, validate) => {
         // Leer y extraer enlaces 
         leerContenidoMarkdown(inputPath)
           .then(contenidoMarkdown => {
-            const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
-            const links = [];
-            let match;
-            while ((match = regex.exec(contenidoMarkdown)) !== null) {
-              links.push({
-                href: match[2], //extrae URL
-                text: match[1], //extrae título
-                file: inputPath, //extrae ruta
-              });
+            const links = crearObj(contenidoMarkdown, inputPath);
               if(validate){
                 (validateLinks(links).then((res) => resolve(res)));
               }else{
                 resolve(links);
               }
-            }
-          })
+            })
           .catch(err => reject(err));
       } else {
         console.log("No es un archivo Markdown.");

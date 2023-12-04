@@ -1,5 +1,5 @@
 const { mdLinks } = require("./index.js");
-mdLinks("README copy.md", true)
+mdLinks("README copy.md", false)
 .then((res) => {
   console.log(res);
 })

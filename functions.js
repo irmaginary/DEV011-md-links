@@ -47,6 +47,20 @@ const leerContenidoMarkdown = (ruta) => {
   });
 };
 
+const crearObj = (data, file) => {
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const links = [];
+  let match;
+  while ((match = regex.exec(data)) !== null) {
+    links.push({
+      href: match[2], //extrae URL
+      text: match[1], //extrae título
+      file //extrae ruta
+    });
+    return links;
+}
+}
+
 
 const validateLinks = (links) => {
   const verifArray = links.map((i) => {
@@ -72,5 +86,6 @@ module.exports = {
   verificarExtensionMarkdown,
   leerContenidoMarkdown,
   validateLinks,
+  crearObj
 };
 
