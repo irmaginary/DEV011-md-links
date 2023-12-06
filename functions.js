@@ -1,12 +1,3 @@
-//validate
-//puedes usar un .map para recorrer todos los objetos y
-//retornar una promesa de fetch o axios.
-//Luego tu función validar puede retornar un Promise.all
-//con el array de promesas resultado del .map
-// return new Promise((resolve, reject) => {
-//   Links.map({ status: axios.status });
-// });
-
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
