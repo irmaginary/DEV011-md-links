@@ -24,6 +24,26 @@ describe("validateLinks", () => {
   });
 });
 
+describe("validateLinks", () => {
+it('Debe omitir status y status text si el elemento es falso', (done) => {
+  validateLinks(mockLinks).catch((err) => {
+    expect(err).toEqual([
+      {
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        text: 'Markdown',
+        file: 'README copy.md',
+        status: 404,
+        statusText: 'error',
+      }
+    ])
+  })
+  done()
+})
+});
+
+
+
+
 // describe("validateLinks", () => {
 //   it('debería validar el elemento href y agregar status y statusText', async () => {
 //     const result = await validateLinks(mockLinks);
