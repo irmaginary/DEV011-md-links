@@ -39,37 +39,43 @@ const leerContenidoMarkdown = (ruta) => {
 };
 
 const crearObj = (data, file) => {
-  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
-  const links = [];
+  const regex = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+  let links = [];
   let match;
-  while ((match = regex.exec(data)) !== null) {
+  while ((match = regex.exec(data)) !== null) { //el while sigue ejecutando el match regex hasta que sea null
     links.push({
-      href: match[2], //extrae URL
-      text: match[1], //extrae título
-      file //extrae ruta
+      href: match[2],
+      text: match[1],
+      file,
     });
-    return links;
-}
-}
+  }
+  return links;
+};
 
 
 const validateLinks = (links) => {
   const verifArray = links.map((i) => {
-    const newItem = {...i};
-    return axios.get(newItem.href)
-    .then((res) => {
-      newItem.status = res.status;
-      newItem.statusText = res.statusText;
-      return newItem;
-    })
-    .catch((error) => {
-      newItem.status = !error.response ? 404 : error.response.status;
-      newItem.statusText = "error";
-      return newItem;
+    const newItem = { ...i };
+    return axios
+      .get(newItem.href)
+      .then((res) => {
+        newItem.status = res.status;
+        newItem.statusText = res.statusText;
+        return newItem;
+      })
+      .catch((error) => {
+        newItem.status = !error.response ? 404 : error.response.status;
+        newItem.statusText = "FAIL";
+        return newItem;
       });
   });
+
   return Promise.all(verifArray);
-}
+};
+
+
+
+
 
 module.exports = {
   verificarExistencia,
@@ -77,6 +83,5 @@ module.exports = {
   verificarExtensionMarkdown,
   leerContenidoMarkdown,
   validateLinks,
-  crearObj
+  crearObj,
 };
-
