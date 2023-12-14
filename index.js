@@ -29,6 +29,7 @@ const mdLinks = (inputPath, validate) => {
         leerContenidoMarkdown(inputPath)
           .then((contenidoMarkdown) => {
             const links = crearObj(contenidoMarkdown, inputPath);
+            //validar primero antes de pasar el contenido a stats
             if (validate) {
               validateLinks(links).then((res) => resolve(res));
             } else {
