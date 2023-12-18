@@ -3,19 +3,10 @@ const { mdLinks } = require("../index.js");
 
 describe("mdLinks", () => {
   it("Debería ser una función", () => {
-    console.log("FIX ME!");
+    //console.log("FIX ME!");
   });
-  // it('should return a Promise', () => {
-  //   expect(mdLinks()).toBe(typeof Promise);
-  // });
 });
-// describe("verifExtension", () => {
-//   it("Debe rechazar cuando no es un archivo md", () => {
-//     return verifExtension("/archivoFalso.mg").catch((error) => {
-//       expect(error).toBe("No es un archivo Markdown.");
-//     });
-//   });
-// });
+
 describe("mdLinks", () => {
   it("Debe rechazar cuando no es un archivo md", () => {
     return mdLinks("/archivoFalso.mg").catch((error) => {

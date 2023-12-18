@@ -1,4 +1,11 @@
-const { verificarExistencia, convertirRutaAbsoluta, verificarExtensionMarkdown, leerContenidoMarkdown, validateLinks } = require("./functions.js");
+const {
+  verificarExistencia,
+  convertirRutaAbsoluta,
+  verificarExtensionMarkdown,
+  leerContenidoMarkdown,
+  validateLinks,
+  crearObj,
+} = require("./functions.js");
 
 const mdLinks = (inputPath, validate) => {
   return new Promise((resolve, reject) => {
@@ -9,42 +16,33 @@ const mdLinks = (inputPath, validate) => {
       // Si la ruta no es absoluta, convertirla
       if (!esAbsoluta) {
         inputPath = convertirRutaAbsoluta(inputPath);
-        console.log("Ruta convertida");
+        //console.log("Ruta convertida");
       } else {
         // Si es absoluta
-        console.log("Es absoluta");
+        //console.log("Es absoluta");
       }
       // Verificar si es un archivo o directorio comprobando extensión de md
       if (verificarExtensionMarkdown(inputPath)) {
-        console.log("Es un archivo Markdown.");
+        //console.log("Es un archivo Markdown.");
 
-        // Leer y extraer enlaces 
+        // Leer y extraer enlaces
         leerContenidoMarkdown(inputPath)
-          .then(contenidoMarkdown => {
-            const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
-            const links = [];
-            let match;
-            while ((match = regex.exec(contenidoMarkdown)) !== null) {
-              links.push({
-                href: match[2], //extrae URL
-                text: match[1], //extrae título
-                file: inputPath, //extrae ruta
-              });
-              if(validate){
-                (validateLinks(links).then((res) => resolve(res)));
-              }else{
-                resolve(links);
-              }
+          .then((contenidoMarkdown) => {
+            const links = crearObj(contenidoMarkdown, inputPath);
+            //validar primero antes de pasar el contenido a stats
+            if (validate) {
+              validateLinks(links).then((res) => resolve(res));
+            } else {
+              resolve(links);
             }
           })
-          .catch(err => reject(err));
+          .catch((err) => reject(err));
       } else {
-        console.log("No es un archivo Markdown.");
+        //console.log("No es un archivo Markdown.");
         reject("No es un archivo Markdown.");
       }
     } else {
-      // Si no existe la ruta: reject
-      console.log("La ruta no existe");
+      //console.log("La ruta no existe");
       reject("La ruta no existe");
     }
   });
@@ -53,4 +51,3 @@ const mdLinks = (inputPath, validate) => {
 module.exports = {
   mdLinks,
 };
-
