@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
-//const { mdLinks } = require(".");
 
 const verificarExistencia = (ruta) => {
   return fs.existsSync(ruta);
@@ -86,23 +85,6 @@ const stats = (verifArray) => {
    return { countLinks, uniqueLinks, brokenLinks };
   }
 
-
-// const stats = (links) => {
-//   const statsLinks = links.map((i) => {
-//     .then((links) => {
-//       const countLinks = links.length;
-//       const uniqueLinks = links.filter((link, index, array) =>
-//       array.findIndex((l) => l.href === link.href) === index);
-//       const brokenLinks = links.filter((link) => link.status !== 200);
-//       return {countLinks, uniqueLinks, brokenLinks};
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-//   });
-//   return Promise.all(statsLinks);
-
-//}
 
 module.exports = {
   verificarExistencia,
